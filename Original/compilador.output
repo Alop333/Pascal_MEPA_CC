@@ -1,0 +1,1790 @@
+Terminals unused in grammar
+
+    TYPE
+    ARRAY
+    A_COLCHETES
+    F_COLCHETES
+    OF
+    LABEL
+    T_OR
+    T_AND
+    T_NOT
+
+
+State 19 conflicts: 2 shift/reduce
+State 138 conflicts: 1 shift/reduce
+
+
+Grammar
+
+    0 $accept: programa $end
+
+    1 $@1: ε
+
+    2 $@2: ε
+
+    3 programa: $@1 PROGRAM identificador ABRE_PARENTESES lista_ident FECHA_PARENTESES PONTO_E_VIRGULA $@2 bloco PONTO
+
+    4 $@3: ε
+
+    5 $@4: ε
+
+    6 bloco: $@3 parte_declara_vars parte_declara_subrotinas $@4 comando_composto
+
+    7 tipo: identificador
+
+    8 $@5: ε
+
+    9 parte_declara_vars: VAR $@5 declara_vars
+   10                   | ε
+
+   11 declara_vars: declara_vars lista_ident DOIS_PONTOS tipo PONTO_E_VIRGULA
+   12             | lista_ident DOIS_PONTOS tipo PONTO_E_VIRGULA
+
+   13 lista_ident: lista_ident VIRGULA identificador
+   14            | identificador
+
+   15 parte_declara_subrotinas: parte_declara_subrotinas procedimento_funcao
+   16                         | procedimento_funcao
+   17                         | ε
+
+   18 procedimento_funcao: declara_procedimento
+   19                    | declara_funcao
+
+   20 $@6: ε
+
+   21 $@7: ε
+
+   22 declara_procedimento: PROCEDURE $@6 identificador_subrotina parametros_formais PONTO_E_VIRGULA $@7 bloco PONTO_E_VIRGULA
+
+   23 $@8: ε
+
+   24 $@9: ε
+
+   25 declara_funcao: FUNCTION $@8 identificador_func parametros_formais DOIS_PONTOS tipo PONTO_E_VIRGULA $@9 bloco PONTO_E_VIRGULA
+
+   26 identificador_subrotina: IDENT
+
+   27 identificador_func: IDENT
+
+   28 $@10: ε
+
+   29 $@11: ε
+
+   30 parametros_formais: ABRE_PARENTESES $@10 sec_parametros_formais $@11 FECHA_PARENTESES
+   31                   | ε
+
+   32 sec_parametros_formais: sec_parametros_formais PONTO_E_VIRGULA VAR lista_ident_par_r DOIS_PONTOS tipo
+   33                       | VAR lista_ident_par_r DOIS_PONTOS tipo
+   34                       | sec_parametros_formais PONTO_E_VIRGULA lista_ident_par_f DOIS_PONTOS tipo
+   35                       | lista_ident_par_f DOIS_PONTOS tipo
+
+   36 lista_ident_par_r: lista_ident_par_r VIRGULA identificador
+   37                  | identificador
+
+   38 lista_ident_par_f: lista_ident_par_f VIRGULA identificador
+   39                  | identificador
+
+   40 comando_composto: T_BEGIN comando T_END
+
+   41 comando: comando PONTO_E_VIRGULA comando_s_rotulo
+   42        | comando_s_rotulo
+
+   43 comando_s_rotulo: variavel_ident
+   44                 | comando_composto
+   45                 | comando_condicional
+   46                 | comando_repetitivo
+
+   47 $@12: ε
+
+   48 variavel_ident: IDENT $@12 funcao_atr
+
+   49 funcao_atr: ATRIBUICAO expressao_simples
+   50           | chamada_proced
+
+   51 $@13: ε
+
+   52 chamada_proced: ABRE_PARENTESES $@13 lista_de_expressao FECHA_PARENTESES
+   53               | ε
+
+   54 $@14: ε
+
+   55 $@15: ε
+
+   56 comando_condicional: T_IF $@14 expressao_bool $@15 T_THEN comando_s_rotulo else_condicional
+
+   57 $@16: ε
+
+   58 else_condicional: T_ELSE $@16 comando_s_rotulo
+   59                 | ε
+
+   60 $@17: ε
+
+   61 $@18: ε
+
+   62 $@19: ε
+
+   63 comando_repetitivo: T_WHILE $@17 expressao_bool $@18 T_DO $@19 comando_s_rotulo
+
+   64 lista_de_expressao: lista_de_expressao VIRGULA expressao_simples
+   65                   | expressao_simples
+
+   66 expressao_bool: expressao_simples relacao expressao_simples
+
+   67 relacao: T_IGUAL
+   68        | T_DIFERENTE
+   69        | T_MENOR
+   70        | T_MENOR_IGUAL
+   71        | T_MAIOR
+   72        | T_MAIOR_IGUAL
+
+   73 expressao_simples: termo
+   74                  | termo T_MAIS expressao_simples
+   75                  | termo T_MENOS expressao_simples
+
+   76 termo: fator
+   77      | fator T_MULT fator
+   78      | fator T_DIV fator
+
+   79 fator: identificador
+   80      | chamada_func
+   81      | ABRE_PARENTESES expressao_simples FECHA_PARENTESES
+   82      | NUMERO
+
+   83 $@20: ε
+
+   84 chamada_func: identificador $@20 par_func
+
+   85 par_func: ABRE_PARENTESES lista_de_expressao FECHA_PARENTESES
+
+   86 identificador: IDENT
+
+
+Terminals, with rules where they appear
+
+    $end (0) 0
+    error (256)
+    PROGRAM (258) 3
+    TYPE (259)
+    ARRAY (260)
+    ABRE_PARENTESES (261) 3 30 52 81 85
+    FECHA_PARENTESES (262) 3 30 52 81 85
+    A_COLCHETES (263)
+    F_COLCHETES (264)
+    OF (265)
+    LABEL (266)
+    PROCEDURE (267) 22
+    FUNCTION (268) 25
+    T_IF (269) 56
+    T_THEN (270) 56
+    T_ELSE (271) 58
+    T_WHILE (272) 63
+    T_DO (273) 63
+    T_IGUAL (274) 67
+    T_DIFERENTE (275) 68
+    T_MAIOR_IGUAL (276) 72
+    T_MENOR_IGUAL (277) 70
+    T_MAIOR (278) 71
+    T_MENOR (279) 69
+    T_MAIS (280) 74
+    T_MENOS (281) 75
+    T_OR (282)
+    T_MULT (283) 77
+    T_DIV (284) 78
+    T_AND (285)
+    T_NOT (286)
+    VIRGULA (287) 13 36 38 64
+    PONTO_E_VIRGULA (288) 3 11 12 22 25 32 34 41
+    DOIS_PONTOS (289) 11 12 25 32 33 34 35
+    PONTO (290) 3
+    T_BEGIN (291) 40
+    T_END (292) 40
+    VAR (293) 9 32 33
+    NUMERO (294) 82
+    IDENT (295) 26 27 48 86
+    ATRIBUICAO (296) 49
+
+
+Nonterminals, with rules where they appear
+
+    $accept (42)
+        on left: 0
+    programa (43)
+        on left: 3
+        on right: 0
+    $@1 (44)
+        on left: 1
+        on right: 3
+    $@2 (45)
+        on left: 2
+        on right: 3
+    bloco (46)
+        on left: 6
+        on right: 3 22 25
+    $@3 (47)
+        on left: 4
+        on right: 6
+    $@4 (48)
+        on left: 5
+        on right: 6
+    tipo (49)
+        on left: 7
+        on right: 11 12 25 32 33 34 35
+    parte_declara_vars (50)
+        on left: 9 10
+        on right: 6
+    $@5 (51)
+        on left: 8
+        on right: 9
+    declara_vars (52)
+        on left: 11 12
+        on right: 9 11
+    lista_ident (53)
+        on left: 13 14
+        on right: 3 11 12 13
+    parte_declara_subrotinas (54)
+        on left: 15 16 17
+        on right: 6 15
+    procedimento_funcao (55)
+        on left: 18 19
+        on right: 15 16
+    declara_procedimento (56)
+        on left: 22
+        on right: 18
+    $@6 (57)
+        on left: 20
+        on right: 22
+    $@7 (58)
+        on left: 21
+        on right: 22
+    declara_funcao (59)
+        on left: 25
+        on right: 19
+    $@8 (60)
+        on left: 23
+        on right: 25
+    $@9 (61)
+        on left: 24
+        on right: 25
+    identificador_subrotina (62)
+        on left: 26
+        on right: 22
+    identificador_func (63)
+        on left: 27
+        on right: 25
+    parametros_formais (64)
+        on left: 30 31
+        on right: 22 25
+    $@10 (65)
+        on left: 28
+        on right: 30
+    $@11 (66)
+        on left: 29
+        on right: 30
+    sec_parametros_formais (67)
+        on left: 32 33 34 35
+        on right: 30 32 34
+    lista_ident_par_r (68)
+        on left: 36 37
+        on right: 32 33 36
+    lista_ident_par_f (69)
+        on left: 38 39
+        on right: 34 35 38
+    comando_composto (70)
+        on left: 40
+        on right: 6 44
+    comando (71)
+        on left: 41 42
+        on right: 40 41
+    comando_s_rotulo (72)
+        on left: 43 44 45 46
+        on right: 41 42 56 58 63
+    variavel_ident (73)
+        on left: 48
+        on right: 43
+    $@12 (74)
+        on left: 47
+        on right: 48
+    funcao_atr (75)
+        on left: 49 50
+        on right: 48
+    chamada_proced (76)
+        on left: 52 53
+        on right: 50
+    $@13 (77)
+        on left: 51
+        on right: 52
+    comando_condicional (78)
+        on left: 56
+        on right: 45
+    $@14 (79)
+        on left: 54
+        on right: 56
+    $@15 (80)
+        on left: 55
+        on right: 56
+    else_condicional (81)
+        on left: 58 59
+        on right: 56
+    $@16 (82)
+        on left: 57
+        on right: 58
+    comando_repetitivo (83)
+        on left: 63
+        on right: 46
+    $@17 (84)
+        on left: 60
+        on right: 63
+    $@18 (85)
+        on left: 61
+        on right: 63
+    $@19 (86)
+        on left: 62
+        on right: 63
+    lista_de_expressao (87)
+        on left: 64 65
+        on right: 52 64 85
+    expressao_bool (88)
+        on left: 66
+        on right: 56 63
+    relacao (89)
+        on left: 67 68 69 70 71 72
+        on right: 66
+    expressao_simples (90)
+        on left: 73 74 75
+        on right: 49 64 65 66 74 75 81
+    termo (91)
+        on left: 76 77 78
+        on right: 73 74 75
+    fator (92)
+        on left: 79 80 81 82
+        on right: 76 77 78
+    chamada_func (93)
+        on left: 84
+        on right: 80
+    $@20 (94)
+        on left: 83
+        on right: 84
+    par_func (95)
+        on left: 85
+        on right: 84
+    identificador (96)
+        on left: 86
+        on right: 3 7 13 14 36 37 38 39 79 84
+
+
+State 0
+
+    0 $accept: • programa $end
+
+    $default  reduce using rule 1 ($@1)
+
+    programa  go to state 1
+    $@1       go to state 2
+
+
+State 1
+
+    0 $accept: programa • $end
+
+    $end  shift, and go to state 3
+
+
+State 2
+
+    3 programa: $@1 • PROGRAM identificador ABRE_PARENTESES lista_ident FECHA_PARENTESES PONTO_E_VIRGULA $@2 bloco PONTO
+
+    PROGRAM  shift, and go to state 4
+
+
+State 3
+
+    0 $accept: programa $end •
+
+    $default  accept
+
+
+State 4
+
+    3 programa: $@1 PROGRAM • identificador ABRE_PARENTESES lista_ident FECHA_PARENTESES PONTO_E_VIRGULA $@2 bloco PONTO
+
+    IDENT  shift, and go to state 5
+
+    identificador  go to state 6
+
+
+State 5
+
+   86 identificador: IDENT •
+
+    $default  reduce using rule 86 (identificador)
+
+
+State 6
+
+    3 programa: $@1 PROGRAM identificador • ABRE_PARENTESES lista_ident FECHA_PARENTESES PONTO_E_VIRGULA $@2 bloco PONTO
+
+    ABRE_PARENTESES  shift, and go to state 7
+
+
+State 7
+
+    3 programa: $@1 PROGRAM identificador ABRE_PARENTESES • lista_ident FECHA_PARENTESES PONTO_E_VIRGULA $@2 bloco PONTO
+
+    IDENT  shift, and go to state 5
+
+    lista_ident    go to state 8
+    identificador  go to state 9
+
+
+State 8
+
+    3 programa: $@1 PROGRAM identificador ABRE_PARENTESES lista_ident • FECHA_PARENTESES PONTO_E_VIRGULA $@2 bloco PONTO
+   13 lista_ident: lista_ident • VIRGULA identificador
+
+    FECHA_PARENTESES  shift, and go to state 10
+    VIRGULA           shift, and go to state 11
+
+
+State 9
+
+   14 lista_ident: identificador •
+
+    $default  reduce using rule 14 (lista_ident)
+
+
+State 10
+
+    3 programa: $@1 PROGRAM identificador ABRE_PARENTESES lista_ident FECHA_PARENTESES • PONTO_E_VIRGULA $@2 bloco PONTO
+
+    PONTO_E_VIRGULA  shift, and go to state 12
+
+
+State 11
+
+   13 lista_ident: lista_ident VIRGULA • identificador
+
+    IDENT  shift, and go to state 5
+
+    identificador  go to state 13
+
+
+State 12
+
+    3 programa: $@1 PROGRAM identificador ABRE_PARENTESES lista_ident FECHA_PARENTESES PONTO_E_VIRGULA • $@2 bloco PONTO
+
+    $default  reduce using rule 2 ($@2)
+
+    $@2  go to state 14
+
+
+State 13
+
+   13 lista_ident: lista_ident VIRGULA identificador •
+
+    $default  reduce using rule 13 (lista_ident)
+
+
+State 14
+
+    3 programa: $@1 PROGRAM identificador ABRE_PARENTESES lista_ident FECHA_PARENTESES PONTO_E_VIRGULA $@2 • bloco PONTO
+
+    $default  reduce using rule 4 ($@3)
+
+    bloco  go to state 15
+    $@3    go to state 16
+
+
+State 15
+
+    3 programa: $@1 PROGRAM identificador ABRE_PARENTESES lista_ident FECHA_PARENTESES PONTO_E_VIRGULA $@2 bloco • PONTO
+
+    PONTO  shift, and go to state 17
+
+
+State 16
+
+    6 bloco: $@3 • parte_declara_vars parte_declara_subrotinas $@4 comando_composto
+
+    VAR  shift, and go to state 18
+
+    $default  reduce using rule 10 (parte_declara_vars)
+
+    parte_declara_vars  go to state 19
+
+
+State 17
+
+    3 programa: $@1 PROGRAM identificador ABRE_PARENTESES lista_ident FECHA_PARENTESES PONTO_E_VIRGULA $@2 bloco PONTO •
+
+    $default  reduce using rule 3 (programa)
+
+
+State 18
+
+    9 parte_declara_vars: VAR • $@5 declara_vars
+
+    $default  reduce using rule 8 ($@5)
+
+    $@5  go to state 20
+
+
+State 19
+
+    6 bloco: $@3 parte_declara_vars • parte_declara_subrotinas $@4 comando_composto
+
+    PROCEDURE  shift, and go to state 21
+    FUNCTION   shift, and go to state 22
+
+    PROCEDURE  [reduce using rule 17 (parte_declara_subrotinas)]
+    FUNCTION   [reduce using rule 17 (parte_declara_subrotinas)]
+    $default   reduce using rule 17 (parte_declara_subrotinas)
+
+    parte_declara_subrotinas  go to state 23
+    procedimento_funcao       go to state 24
+    declara_procedimento      go to state 25
+    declara_funcao            go to state 26
+
+
+State 20
+
+    9 parte_declara_vars: VAR $@5 • declara_vars
+
+    IDENT  shift, and go to state 5
+
+    declara_vars   go to state 27
+    lista_ident    go to state 28
+    identificador  go to state 9
+
+
+State 21
+
+   22 declara_procedimento: PROCEDURE • $@6 identificador_subrotina parametros_formais PONTO_E_VIRGULA $@7 bloco PONTO_E_VIRGULA
+
+    $default  reduce using rule 20 ($@6)
+
+    $@6  go to state 29
+
+
+State 22
+
+   25 declara_funcao: FUNCTION • $@8 identificador_func parametros_formais DOIS_PONTOS tipo PONTO_E_VIRGULA $@9 bloco PONTO_E_VIRGULA
+
+    $default  reduce using rule 23 ($@8)
+
+    $@8  go to state 30
+
+
+State 23
+
+    6 bloco: $@3 parte_declara_vars parte_declara_subrotinas • $@4 comando_composto
+   15 parte_declara_subrotinas: parte_declara_subrotinas • procedimento_funcao
+
+    PROCEDURE  shift, and go to state 21
+    FUNCTION   shift, and go to state 22
+
+    $default  reduce using rule 5 ($@4)
+
+    $@4                   go to state 31
+    procedimento_funcao   go to state 32
+    declara_procedimento  go to state 25
+    declara_funcao        go to state 26
+
+
+State 24
+
+   16 parte_declara_subrotinas: procedimento_funcao •
+
+    $default  reduce using rule 16 (parte_declara_subrotinas)
+
+
+State 25
+
+   18 procedimento_funcao: declara_procedimento •
+
+    $default  reduce using rule 18 (procedimento_funcao)
+
+
+State 26
+
+   19 procedimento_funcao: declara_funcao •
+
+    $default  reduce using rule 19 (procedimento_funcao)
+
+
+State 27
+
+    9 parte_declara_vars: VAR $@5 declara_vars •
+   11 declara_vars: declara_vars • lista_ident DOIS_PONTOS tipo PONTO_E_VIRGULA
+
+    IDENT  shift, and go to state 5
+
+    $default  reduce using rule 9 (parte_declara_vars)
+
+    lista_ident    go to state 33
+    identificador  go to state 9
+
+
+State 28
+
+   12 declara_vars: lista_ident • DOIS_PONTOS tipo PONTO_E_VIRGULA
+   13 lista_ident: lista_ident • VIRGULA identificador
+
+    VIRGULA      shift, and go to state 11
+    DOIS_PONTOS  shift, and go to state 34
+
+
+State 29
+
+   22 declara_procedimento: PROCEDURE $@6 • identificador_subrotina parametros_formais PONTO_E_VIRGULA $@7 bloco PONTO_E_VIRGULA
+
+    IDENT  shift, and go to state 35
+
+    identificador_subrotina  go to state 36
+
+
+State 30
+
+   25 declara_funcao: FUNCTION $@8 • identificador_func parametros_formais DOIS_PONTOS tipo PONTO_E_VIRGULA $@9 bloco PONTO_E_VIRGULA
+
+    IDENT  shift, and go to state 37
+
+    identificador_func  go to state 38
+
+
+State 31
+
+    6 bloco: $@3 parte_declara_vars parte_declara_subrotinas $@4 • comando_composto
+
+    T_BEGIN  shift, and go to state 39
+
+    comando_composto  go to state 40
+
+
+State 32
+
+   15 parte_declara_subrotinas: parte_declara_subrotinas procedimento_funcao •
+
+    $default  reduce using rule 15 (parte_declara_subrotinas)
+
+
+State 33
+
+   11 declara_vars: declara_vars lista_ident • DOIS_PONTOS tipo PONTO_E_VIRGULA
+   13 lista_ident: lista_ident • VIRGULA identificador
+
+    VIRGULA      shift, and go to state 11
+    DOIS_PONTOS  shift, and go to state 41
+
+
+State 34
+
+   12 declara_vars: lista_ident DOIS_PONTOS • tipo PONTO_E_VIRGULA
+
+    IDENT  shift, and go to state 5
+
+    tipo           go to state 42
+    identificador  go to state 43
+
+
+State 35
+
+   26 identificador_subrotina: IDENT •
+
+    $default  reduce using rule 26 (identificador_subrotina)
+
+
+State 36
+
+   22 declara_procedimento: PROCEDURE $@6 identificador_subrotina • parametros_formais PONTO_E_VIRGULA $@7 bloco PONTO_E_VIRGULA
+
+    ABRE_PARENTESES  shift, and go to state 44
+
+    $default  reduce using rule 31 (parametros_formais)
+
+    parametros_formais  go to state 45
+
+
+State 37
+
+   27 identificador_func: IDENT •
+
+    $default  reduce using rule 27 (identificador_func)
+
+
+State 38
+
+   25 declara_funcao: FUNCTION $@8 identificador_func • parametros_formais DOIS_PONTOS tipo PONTO_E_VIRGULA $@9 bloco PONTO_E_VIRGULA
+
+    ABRE_PARENTESES  shift, and go to state 44
+
+    $default  reduce using rule 31 (parametros_formais)
+
+    parametros_formais  go to state 46
+
+
+State 39
+
+   40 comando_composto: T_BEGIN • comando T_END
+
+    T_IF     shift, and go to state 47
+    T_WHILE  shift, and go to state 48
+    T_BEGIN  shift, and go to state 39
+    IDENT    shift, and go to state 49
+
+    comando_composto     go to state 50
+    comando              go to state 51
+    comando_s_rotulo     go to state 52
+    variavel_ident       go to state 53
+    comando_condicional  go to state 54
+    comando_repetitivo   go to state 55
+
+
+State 40
+
+    6 bloco: $@3 parte_declara_vars parte_declara_subrotinas $@4 comando_composto •
+
+    $default  reduce using rule 6 (bloco)
+
+
+State 41
+
+   11 declara_vars: declara_vars lista_ident DOIS_PONTOS • tipo PONTO_E_VIRGULA
+
+    IDENT  shift, and go to state 5
+
+    tipo           go to state 56
+    identificador  go to state 43
+
+
+State 42
+
+   12 declara_vars: lista_ident DOIS_PONTOS tipo • PONTO_E_VIRGULA
+
+    PONTO_E_VIRGULA  shift, and go to state 57
+
+
+State 43
+
+    7 tipo: identificador •
+
+    $default  reduce using rule 7 (tipo)
+
+
+State 44
+
+   30 parametros_formais: ABRE_PARENTESES • $@10 sec_parametros_formais $@11 FECHA_PARENTESES
+
+    $default  reduce using rule 28 ($@10)
+
+    $@10  go to state 58
+
+
+State 45
+
+   22 declara_procedimento: PROCEDURE $@6 identificador_subrotina parametros_formais • PONTO_E_VIRGULA $@7 bloco PONTO_E_VIRGULA
+
+    PONTO_E_VIRGULA  shift, and go to state 59
+
+
+State 46
+
+   25 declara_funcao: FUNCTION $@8 identificador_func parametros_formais • DOIS_PONTOS tipo PONTO_E_VIRGULA $@9 bloco PONTO_E_VIRGULA
+
+    DOIS_PONTOS  shift, and go to state 60
+
+
+State 47
+
+   56 comando_condicional: T_IF • $@14 expressao_bool $@15 T_THEN comando_s_rotulo else_condicional
+
+    $default  reduce using rule 54 ($@14)
+
+    $@14  go to state 61
+
+
+State 48
+
+   63 comando_repetitivo: T_WHILE • $@17 expressao_bool $@18 T_DO $@19 comando_s_rotulo
+
+    $default  reduce using rule 60 ($@17)
+
+    $@17  go to state 62
+
+
+State 49
+
+   48 variavel_ident: IDENT • $@12 funcao_atr
+
+    $default  reduce using rule 47 ($@12)
+
+    $@12  go to state 63
+
+
+State 50
+
+   44 comando_s_rotulo: comando_composto •
+
+    $default  reduce using rule 44 (comando_s_rotulo)
+
+
+State 51
+
+   40 comando_composto: T_BEGIN comando • T_END
+   41 comando: comando • PONTO_E_VIRGULA comando_s_rotulo
+
+    PONTO_E_VIRGULA  shift, and go to state 64
+    T_END            shift, and go to state 65
+
+
+State 52
+
+   42 comando: comando_s_rotulo •
+
+    $default  reduce using rule 42 (comando)
+
+
+State 53
+
+   43 comando_s_rotulo: variavel_ident •
+
+    $default  reduce using rule 43 (comando_s_rotulo)
+
+
+State 54
+
+   45 comando_s_rotulo: comando_condicional •
+
+    $default  reduce using rule 45 (comando_s_rotulo)
+
+
+State 55
+
+   46 comando_s_rotulo: comando_repetitivo •
+
+    $default  reduce using rule 46 (comando_s_rotulo)
+
+
+State 56
+
+   11 declara_vars: declara_vars lista_ident DOIS_PONTOS tipo • PONTO_E_VIRGULA
+
+    PONTO_E_VIRGULA  shift, and go to state 66
+
+
+State 57
+
+   12 declara_vars: lista_ident DOIS_PONTOS tipo PONTO_E_VIRGULA •
+
+    $default  reduce using rule 12 (declara_vars)
+
+
+State 58
+
+   30 parametros_formais: ABRE_PARENTESES $@10 • sec_parametros_formais $@11 FECHA_PARENTESES
+
+    VAR    shift, and go to state 67
+    IDENT  shift, and go to state 5
+
+    sec_parametros_formais  go to state 68
+    lista_ident_par_f       go to state 69
+    identificador           go to state 70
+
+
+State 59
+
+   22 declara_procedimento: PROCEDURE $@6 identificador_subrotina parametros_formais PONTO_E_VIRGULA • $@7 bloco PONTO_E_VIRGULA
+
+    $default  reduce using rule 21 ($@7)
+
+    $@7  go to state 71
+
+
+State 60
+
+   25 declara_funcao: FUNCTION $@8 identificador_func parametros_formais DOIS_PONTOS • tipo PONTO_E_VIRGULA $@9 bloco PONTO_E_VIRGULA
+
+    IDENT  shift, and go to state 5
+
+    tipo           go to state 72
+    identificador  go to state 43
+
+
+State 61
+
+   56 comando_condicional: T_IF $@14 • expressao_bool $@15 T_THEN comando_s_rotulo else_condicional
+
+    ABRE_PARENTESES  shift, and go to state 73
+    NUMERO           shift, and go to state 74
+    IDENT            shift, and go to state 5
+
+    expressao_bool     go to state 75
+    expressao_simples  go to state 76
+    termo              go to state 77
+    fator              go to state 78
+    chamada_func       go to state 79
+    identificador      go to state 80
+
+
+State 62
+
+   63 comando_repetitivo: T_WHILE $@17 • expressao_bool $@18 T_DO $@19 comando_s_rotulo
+
+    ABRE_PARENTESES  shift, and go to state 73
+    NUMERO           shift, and go to state 74
+    IDENT            shift, and go to state 5
+
+    expressao_bool     go to state 81
+    expressao_simples  go to state 76
+    termo              go to state 77
+    fator              go to state 78
+    chamada_func       go to state 79
+    identificador      go to state 80
+
+
+State 63
+
+   48 variavel_ident: IDENT $@12 • funcao_atr
+
+    ABRE_PARENTESES  shift, and go to state 82
+    ATRIBUICAO       shift, and go to state 83
+
+    $default  reduce using rule 53 (chamada_proced)
+
+    funcao_atr      go to state 84
+    chamada_proced  go to state 85
+
+
+State 64
+
+   41 comando: comando PONTO_E_VIRGULA • comando_s_rotulo
+
+    T_IF     shift, and go to state 47
+    T_WHILE  shift, and go to state 48
+    T_BEGIN  shift, and go to state 39
+    IDENT    shift, and go to state 49
+
+    comando_composto     go to state 50
+    comando_s_rotulo     go to state 86
+    variavel_ident       go to state 53
+    comando_condicional  go to state 54
+    comando_repetitivo   go to state 55
+
+
+State 65
+
+   40 comando_composto: T_BEGIN comando T_END •
+
+    $default  reduce using rule 40 (comando_composto)
+
+
+State 66
+
+   11 declara_vars: declara_vars lista_ident DOIS_PONTOS tipo PONTO_E_VIRGULA •
+
+    $default  reduce using rule 11 (declara_vars)
+
+
+State 67
+
+   33 sec_parametros_formais: VAR • lista_ident_par_r DOIS_PONTOS tipo
+
+    IDENT  shift, and go to state 5
+
+    lista_ident_par_r  go to state 87
+    identificador      go to state 88
+
+
+State 68
+
+   30 parametros_formais: ABRE_PARENTESES $@10 sec_parametros_formais • $@11 FECHA_PARENTESES
+   32 sec_parametros_formais: sec_parametros_formais • PONTO_E_VIRGULA VAR lista_ident_par_r DOIS_PONTOS tipo
+   34                       | sec_parametros_formais • PONTO_E_VIRGULA lista_ident_par_f DOIS_PONTOS tipo
+
+    PONTO_E_VIRGULA  shift, and go to state 89
+
+    $default  reduce using rule 29 ($@11)
+
+    $@11  go to state 90
+
+
+State 69
+
+   35 sec_parametros_formais: lista_ident_par_f • DOIS_PONTOS tipo
+   38 lista_ident_par_f: lista_ident_par_f • VIRGULA identificador
+
+    VIRGULA      shift, and go to state 91
+    DOIS_PONTOS  shift, and go to state 92
+
+
+State 70
+
+   39 lista_ident_par_f: identificador •
+
+    $default  reduce using rule 39 (lista_ident_par_f)
+
+
+State 71
+
+   22 declara_procedimento: PROCEDURE $@6 identificador_subrotina parametros_formais PONTO_E_VIRGULA $@7 • bloco PONTO_E_VIRGULA
+
+    $default  reduce using rule 4 ($@3)
+
+    bloco  go to state 93
+    $@3    go to state 16
+
+
+State 72
+
+   25 declara_funcao: FUNCTION $@8 identificador_func parametros_formais DOIS_PONTOS tipo • PONTO_E_VIRGULA $@9 bloco PONTO_E_VIRGULA
+
+    PONTO_E_VIRGULA  shift, and go to state 94
+
+
+State 73
+
+   81 fator: ABRE_PARENTESES • expressao_simples FECHA_PARENTESES
+
+    ABRE_PARENTESES  shift, and go to state 73
+    NUMERO           shift, and go to state 74
+    IDENT            shift, and go to state 5
+
+    expressao_simples  go to state 95
+    termo              go to state 77
+    fator              go to state 78
+    chamada_func       go to state 79
+    identificador      go to state 80
+
+
+State 74
+
+   82 fator: NUMERO •
+
+    $default  reduce using rule 82 (fator)
+
+
+State 75
+
+   56 comando_condicional: T_IF $@14 expressao_bool • $@15 T_THEN comando_s_rotulo else_condicional
+
+    $default  reduce using rule 55 ($@15)
+
+    $@15  go to state 96
+
+
+State 76
+
+   66 expressao_bool: expressao_simples • relacao expressao_simples
+
+    T_IGUAL        shift, and go to state 97
+    T_DIFERENTE    shift, and go to state 98
+    T_MAIOR_IGUAL  shift, and go to state 99
+    T_MENOR_IGUAL  shift, and go to state 100
+    T_MAIOR        shift, and go to state 101
+    T_MENOR        shift, and go to state 102
+
+    relacao  go to state 103
+
+
+State 77
+
+   73 expressao_simples: termo •
+   74                  | termo • T_MAIS expressao_simples
+   75                  | termo • T_MENOS expressao_simples
+
+    T_MAIS   shift, and go to state 104
+    T_MENOS  shift, and go to state 105
+
+    $default  reduce using rule 73 (expressao_simples)
+
+
+State 78
+
+   76 termo: fator •
+   77      | fator • T_MULT fator
+   78      | fator • T_DIV fator
+
+    T_MULT  shift, and go to state 106
+    T_DIV   shift, and go to state 107
+
+    $default  reduce using rule 76 (termo)
+
+
+State 79
+
+   80 fator: chamada_func •
+
+    $default  reduce using rule 80 (fator)
+
+
+State 80
+
+   79 fator: identificador •
+   84 chamada_func: identificador • $@20 par_func
+
+    ABRE_PARENTESES  reduce using rule 83 ($@20)
+    $default         reduce using rule 79 (fator)
+
+    $@20  go to state 108
+
+
+State 81
+
+   63 comando_repetitivo: T_WHILE $@17 expressao_bool • $@18 T_DO $@19 comando_s_rotulo
+
+    $default  reduce using rule 61 ($@18)
+
+    $@18  go to state 109
+
+
+State 82
+
+   52 chamada_proced: ABRE_PARENTESES • $@13 lista_de_expressao FECHA_PARENTESES
+
+    $default  reduce using rule 51 ($@13)
+
+    $@13  go to state 110
+
+
+State 83
+
+   49 funcao_atr: ATRIBUICAO • expressao_simples
+
+    ABRE_PARENTESES  shift, and go to state 73
+    NUMERO           shift, and go to state 74
+    IDENT            shift, and go to state 5
+
+    expressao_simples  go to state 111
+    termo              go to state 77
+    fator              go to state 78
+    chamada_func       go to state 79
+    identificador      go to state 80
+
+
+State 84
+
+   48 variavel_ident: IDENT $@12 funcao_atr •
+
+    $default  reduce using rule 48 (variavel_ident)
+
+
+State 85
+
+   50 funcao_atr: chamada_proced •
+
+    $default  reduce using rule 50 (funcao_atr)
+
+
+State 86
+
+   41 comando: comando PONTO_E_VIRGULA comando_s_rotulo •
+
+    $default  reduce using rule 41 (comando)
+
+
+State 87
+
+   33 sec_parametros_formais: VAR lista_ident_par_r • DOIS_PONTOS tipo
+   36 lista_ident_par_r: lista_ident_par_r • VIRGULA identificador
+
+    VIRGULA      shift, and go to state 112
+    DOIS_PONTOS  shift, and go to state 113
+
+
+State 88
+
+   37 lista_ident_par_r: identificador •
+
+    $default  reduce using rule 37 (lista_ident_par_r)
+
+
+State 89
+
+   32 sec_parametros_formais: sec_parametros_formais PONTO_E_VIRGULA • VAR lista_ident_par_r DOIS_PONTOS tipo
+   34                       | sec_parametros_formais PONTO_E_VIRGULA • lista_ident_par_f DOIS_PONTOS tipo
+
+    VAR    shift, and go to state 114
+    IDENT  shift, and go to state 5
+
+    lista_ident_par_f  go to state 115
+    identificador      go to state 70
+
+
+State 90
+
+   30 parametros_formais: ABRE_PARENTESES $@10 sec_parametros_formais $@11 • FECHA_PARENTESES
+
+    FECHA_PARENTESES  shift, and go to state 116
+
+
+State 91
+
+   38 lista_ident_par_f: lista_ident_par_f VIRGULA • identificador
+
+    IDENT  shift, and go to state 5
+
+    identificador  go to state 117
+
+
+State 92
+
+   35 sec_parametros_formais: lista_ident_par_f DOIS_PONTOS • tipo
+
+    IDENT  shift, and go to state 5
+
+    tipo           go to state 118
+    identificador  go to state 43
+
+
+State 93
+
+   22 declara_procedimento: PROCEDURE $@6 identificador_subrotina parametros_formais PONTO_E_VIRGULA $@7 bloco • PONTO_E_VIRGULA
+
+    PONTO_E_VIRGULA  shift, and go to state 119
+
+
+State 94
+
+   25 declara_funcao: FUNCTION $@8 identificador_func parametros_formais DOIS_PONTOS tipo PONTO_E_VIRGULA • $@9 bloco PONTO_E_VIRGULA
+
+    $default  reduce using rule 24 ($@9)
+
+    $@9  go to state 120
+
+
+State 95
+
+   81 fator: ABRE_PARENTESES expressao_simples • FECHA_PARENTESES
+
+    FECHA_PARENTESES  shift, and go to state 121
+
+
+State 96
+
+   56 comando_condicional: T_IF $@14 expressao_bool $@15 • T_THEN comando_s_rotulo else_condicional
+
+    T_THEN  shift, and go to state 122
+
+
+State 97
+
+   67 relacao: T_IGUAL •
+
+    $default  reduce using rule 67 (relacao)
+
+
+State 98
+
+   68 relacao: T_DIFERENTE •
+
+    $default  reduce using rule 68 (relacao)
+
+
+State 99
+
+   72 relacao: T_MAIOR_IGUAL •
+
+    $default  reduce using rule 72 (relacao)
+
+
+State 100
+
+   70 relacao: T_MENOR_IGUAL •
+
+    $default  reduce using rule 70 (relacao)
+
+
+State 101
+
+   71 relacao: T_MAIOR •
+
+    $default  reduce using rule 71 (relacao)
+
+
+State 102
+
+   69 relacao: T_MENOR •
+
+    $default  reduce using rule 69 (relacao)
+
+
+State 103
+
+   66 expressao_bool: expressao_simples relacao • expressao_simples
+
+    ABRE_PARENTESES  shift, and go to state 73
+    NUMERO           shift, and go to state 74
+    IDENT            shift, and go to state 5
+
+    expressao_simples  go to state 123
+    termo              go to state 77
+    fator              go to state 78
+    chamada_func       go to state 79
+    identificador      go to state 80
+
+
+State 104
+
+   74 expressao_simples: termo T_MAIS • expressao_simples
+
+    ABRE_PARENTESES  shift, and go to state 73
+    NUMERO           shift, and go to state 74
+    IDENT            shift, and go to state 5
+
+    expressao_simples  go to state 124
+    termo              go to state 77
+    fator              go to state 78
+    chamada_func       go to state 79
+    identificador      go to state 80
+
+
+State 105
+
+   75 expressao_simples: termo T_MENOS • expressao_simples
+
+    ABRE_PARENTESES  shift, and go to state 73
+    NUMERO           shift, and go to state 74
+    IDENT            shift, and go to state 5
+
+    expressao_simples  go to state 125
+    termo              go to state 77
+    fator              go to state 78
+    chamada_func       go to state 79
+    identificador      go to state 80
+
+
+State 106
+
+   77 termo: fator T_MULT • fator
+
+    ABRE_PARENTESES  shift, and go to state 73
+    NUMERO           shift, and go to state 74
+    IDENT            shift, and go to state 5
+
+    fator          go to state 126
+    chamada_func   go to state 79
+    identificador  go to state 80
+
+
+State 107
+
+   78 termo: fator T_DIV • fator
+
+    ABRE_PARENTESES  shift, and go to state 73
+    NUMERO           shift, and go to state 74
+    IDENT            shift, and go to state 5
+
+    fator          go to state 127
+    chamada_func   go to state 79
+    identificador  go to state 80
+
+
+State 108
+
+   84 chamada_func: identificador $@20 • par_func
+
+    ABRE_PARENTESES  shift, and go to state 128
+
+    par_func  go to state 129
+
+
+State 109
+
+   63 comando_repetitivo: T_WHILE $@17 expressao_bool $@18 • T_DO $@19 comando_s_rotulo
+
+    T_DO  shift, and go to state 130
+
+
+State 110
+
+   52 chamada_proced: ABRE_PARENTESES $@13 • lista_de_expressao FECHA_PARENTESES
+
+    ABRE_PARENTESES  shift, and go to state 73
+    NUMERO           shift, and go to state 74
+    IDENT            shift, and go to state 5
+
+    lista_de_expressao  go to state 131
+    expressao_simples   go to state 132
+    termo               go to state 77
+    fator               go to state 78
+    chamada_func        go to state 79
+    identificador       go to state 80
+
+
+State 111
+
+   49 funcao_atr: ATRIBUICAO expressao_simples •
+
+    $default  reduce using rule 49 (funcao_atr)
+
+
+State 112
+
+   36 lista_ident_par_r: lista_ident_par_r VIRGULA • identificador
+
+    IDENT  shift, and go to state 5
+
+    identificador  go to state 133
+
+
+State 113
+
+   33 sec_parametros_formais: VAR lista_ident_par_r DOIS_PONTOS • tipo
+
+    IDENT  shift, and go to state 5
+
+    tipo           go to state 134
+    identificador  go to state 43
+
+
+State 114
+
+   32 sec_parametros_formais: sec_parametros_formais PONTO_E_VIRGULA VAR • lista_ident_par_r DOIS_PONTOS tipo
+
+    IDENT  shift, and go to state 5
+
+    lista_ident_par_r  go to state 135
+    identificador      go to state 88
+
+
+State 115
+
+   34 sec_parametros_formais: sec_parametros_formais PONTO_E_VIRGULA lista_ident_par_f • DOIS_PONTOS tipo
+   38 lista_ident_par_f: lista_ident_par_f • VIRGULA identificador
+
+    VIRGULA      shift, and go to state 91
+    DOIS_PONTOS  shift, and go to state 136
+
+
+State 116
+
+   30 parametros_formais: ABRE_PARENTESES $@10 sec_parametros_formais $@11 FECHA_PARENTESES •
+
+    $default  reduce using rule 30 (parametros_formais)
+
+
+State 117
+
+   38 lista_ident_par_f: lista_ident_par_f VIRGULA identificador •
+
+    $default  reduce using rule 38 (lista_ident_par_f)
+
+
+State 118
+
+   35 sec_parametros_formais: lista_ident_par_f DOIS_PONTOS tipo •
+
+    $default  reduce using rule 35 (sec_parametros_formais)
+
+
+State 119
+
+   22 declara_procedimento: PROCEDURE $@6 identificador_subrotina parametros_formais PONTO_E_VIRGULA $@7 bloco PONTO_E_VIRGULA •
+
+    $default  reduce using rule 22 (declara_procedimento)
+
+
+State 120
+
+   25 declara_funcao: FUNCTION $@8 identificador_func parametros_formais DOIS_PONTOS tipo PONTO_E_VIRGULA $@9 • bloco PONTO_E_VIRGULA
+
+    $default  reduce using rule 4 ($@3)
+
+    bloco  go to state 137
+    $@3    go to state 16
+
+
+State 121
+
+   81 fator: ABRE_PARENTESES expressao_simples FECHA_PARENTESES •
+
+    $default  reduce using rule 81 (fator)
+
+
+State 122
+
+   56 comando_condicional: T_IF $@14 expressao_bool $@15 T_THEN • comando_s_rotulo else_condicional
+
+    T_IF     shift, and go to state 47
+    T_WHILE  shift, and go to state 48
+    T_BEGIN  shift, and go to state 39
+    IDENT    shift, and go to state 49
+
+    comando_composto     go to state 50
+    comando_s_rotulo     go to state 138
+    variavel_ident       go to state 53
+    comando_condicional  go to state 54
+    comando_repetitivo   go to state 55
+
+
+State 123
+
+   66 expressao_bool: expressao_simples relacao expressao_simples •
+
+    $default  reduce using rule 66 (expressao_bool)
+
+
+State 124
+
+   74 expressao_simples: termo T_MAIS expressao_simples •
+
+    $default  reduce using rule 74 (expressao_simples)
+
+
+State 125
+
+   75 expressao_simples: termo T_MENOS expressao_simples •
+
+    $default  reduce using rule 75 (expressao_simples)
+
+
+State 126
+
+   77 termo: fator T_MULT fator •
+
+    $default  reduce using rule 77 (termo)
+
+
+State 127
+
+   78 termo: fator T_DIV fator •
+
+    $default  reduce using rule 78 (termo)
+
+
+State 128
+
+   85 par_func: ABRE_PARENTESES • lista_de_expressao FECHA_PARENTESES
+
+    ABRE_PARENTESES  shift, and go to state 73
+    NUMERO           shift, and go to state 74
+    IDENT            shift, and go to state 5
+
+    lista_de_expressao  go to state 139
+    expressao_simples   go to state 132
+    termo               go to state 77
+    fator               go to state 78
+    chamada_func        go to state 79
+    identificador       go to state 80
+
+
+State 129
+
+   84 chamada_func: identificador $@20 par_func •
+
+    $default  reduce using rule 84 (chamada_func)
+
+
+State 130
+
+   63 comando_repetitivo: T_WHILE $@17 expressao_bool $@18 T_DO • $@19 comando_s_rotulo
+
+    $default  reduce using rule 62 ($@19)
+
+    $@19  go to state 140
+
+
+State 131
+
+   52 chamada_proced: ABRE_PARENTESES $@13 lista_de_expressao • FECHA_PARENTESES
+   64 lista_de_expressao: lista_de_expressao • VIRGULA expressao_simples
+
+    FECHA_PARENTESES  shift, and go to state 141
+    VIRGULA           shift, and go to state 142
+
+
+State 132
+
+   65 lista_de_expressao: expressao_simples •
+
+    $default  reduce using rule 65 (lista_de_expressao)
+
+
+State 133
+
+   36 lista_ident_par_r: lista_ident_par_r VIRGULA identificador •
+
+    $default  reduce using rule 36 (lista_ident_par_r)
+
+
+State 134
+
+   33 sec_parametros_formais: VAR lista_ident_par_r DOIS_PONTOS tipo •
+
+    $default  reduce using rule 33 (sec_parametros_formais)
+
+
+State 135
+
+   32 sec_parametros_formais: sec_parametros_formais PONTO_E_VIRGULA VAR lista_ident_par_r • DOIS_PONTOS tipo
+   36 lista_ident_par_r: lista_ident_par_r • VIRGULA identificador
+
+    VIRGULA      shift, and go to state 112
+    DOIS_PONTOS  shift, and go to state 143
+
+
+State 136
+
+   34 sec_parametros_formais: sec_parametros_formais PONTO_E_VIRGULA lista_ident_par_f DOIS_PONTOS • tipo
+
+    IDENT  shift, and go to state 5
+
+    tipo           go to state 144
+    identificador  go to state 43
+
+
+State 137
+
+   25 declara_funcao: FUNCTION $@8 identificador_func parametros_formais DOIS_PONTOS tipo PONTO_E_VIRGULA $@9 bloco • PONTO_E_VIRGULA
+
+    PONTO_E_VIRGULA  shift, and go to state 145
+
+
+State 138
+
+   56 comando_condicional: T_IF $@14 expressao_bool $@15 T_THEN comando_s_rotulo • else_condicional
+
+    T_ELSE  shift, and go to state 146
+
+    T_ELSE    [reduce using rule 59 (else_condicional)]
+    $default  reduce using rule 59 (else_condicional)
+
+    else_condicional  go to state 147
+
+
+State 139
+
+   64 lista_de_expressao: lista_de_expressao • VIRGULA expressao_simples
+   85 par_func: ABRE_PARENTESES lista_de_expressao • FECHA_PARENTESES
+
+    FECHA_PARENTESES  shift, and go to state 148
+    VIRGULA           shift, and go to state 142
+
+
+State 140
+
+   63 comando_repetitivo: T_WHILE $@17 expressao_bool $@18 T_DO $@19 • comando_s_rotulo
+
+    T_IF     shift, and go to state 47
+    T_WHILE  shift, and go to state 48
+    T_BEGIN  shift, and go to state 39
+    IDENT    shift, and go to state 49
+
+    comando_composto     go to state 50
+    comando_s_rotulo     go to state 149
+    variavel_ident       go to state 53
+    comando_condicional  go to state 54
+    comando_repetitivo   go to state 55
+
+
+State 141
+
+   52 chamada_proced: ABRE_PARENTESES $@13 lista_de_expressao FECHA_PARENTESES •
+
+    $default  reduce using rule 52 (chamada_proced)
+
+
+State 142
+
+   64 lista_de_expressao: lista_de_expressao VIRGULA • expressao_simples
+
+    ABRE_PARENTESES  shift, and go to state 73
+    NUMERO           shift, and go to state 74
+    IDENT            shift, and go to state 5
+
+    expressao_simples  go to state 150
+    termo              go to state 77
+    fator              go to state 78
+    chamada_func       go to state 79
+    identificador      go to state 80
+
+
+State 143
+
+   32 sec_parametros_formais: sec_parametros_formais PONTO_E_VIRGULA VAR lista_ident_par_r DOIS_PONTOS • tipo
+
+    IDENT  shift, and go to state 5
+
+    tipo           go to state 151
+    identificador  go to state 43
+
+
+State 144
+
+   34 sec_parametros_formais: sec_parametros_formais PONTO_E_VIRGULA lista_ident_par_f DOIS_PONTOS tipo •
+
+    $default  reduce using rule 34 (sec_parametros_formais)
+
+
+State 145
+
+   25 declara_funcao: FUNCTION $@8 identificador_func parametros_formais DOIS_PONTOS tipo PONTO_E_VIRGULA $@9 bloco PONTO_E_VIRGULA •
+
+    $default  reduce using rule 25 (declara_funcao)
+
+
+State 146
+
+   58 else_condicional: T_ELSE • $@16 comando_s_rotulo
+
+    $default  reduce using rule 57 ($@16)
+
+    $@16  go to state 152
+
+
+State 147
+
+   56 comando_condicional: T_IF $@14 expressao_bool $@15 T_THEN comando_s_rotulo else_condicional •
+
+    $default  reduce using rule 56 (comando_condicional)
+
+
+State 148
+
+   85 par_func: ABRE_PARENTESES lista_de_expressao FECHA_PARENTESES •
+
+    $default  reduce using rule 85 (par_func)
+
+
+State 149
+
+   63 comando_repetitivo: T_WHILE $@17 expressao_bool $@18 T_DO $@19 comando_s_rotulo •
+
+    $default  reduce using rule 63 (comando_repetitivo)
+
+
+State 150
+
+   64 lista_de_expressao: lista_de_expressao VIRGULA expressao_simples •
+
+    $default  reduce using rule 64 (lista_de_expressao)
+
+
+State 151
+
+   32 sec_parametros_formais: sec_parametros_formais PONTO_E_VIRGULA VAR lista_ident_par_r DOIS_PONTOS tipo •
+
+    $default  reduce using rule 32 (sec_parametros_formais)
+
+
+State 152
+
+   58 else_condicional: T_ELSE $@16 • comando_s_rotulo
+
+    T_IF     shift, and go to state 47
+    T_WHILE  shift, and go to state 48
+    T_BEGIN  shift, and go to state 39
+    IDENT    shift, and go to state 49
+
+    comando_composto     go to state 50
+    comando_s_rotulo     go to state 153
+    variavel_ident       go to state 53
+    comando_condicional  go to state 54
+    comando_repetitivo   go to state 55
+
+
+State 153
+
+   58 else_condicional: T_ELSE $@16 comando_s_rotulo •
+
+    $default  reduce using rule 58 (else_condicional)
